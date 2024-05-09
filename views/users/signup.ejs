@@ -1,18 +1,13 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="row mt-3">
-  <h1 class="col-6 offset-3">SignUp on Ad Dekho</h1>
-  <div class="col-6 offset-3">
+  <h1 class="col-8 offset-2">SignUp at AirBnB</h1>
+  <div class="col-xxl-6 col-xl-6 col-lg-7 col-md-7 col-sm-8 col-8 mx-auto">
     <form action="/signUp" method="post" class="needs-validation" novalidate>
       <!-- for username -->
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
-        <input
-          required
-          type="text"
-          name="username"
-          id="username"
-          class="form-control" />
+        <input required type="text" name="username" id="username" class="form-control" />
         <div class="valid-feedback">Looks Good</div>
         <div class="invalid-feedback">No name are you a Gangster</div>
       </div>
@@ -20,24 +15,14 @@
       <!-- for email -->
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input
-          required
-          type="email"
-          name="email"
-          id="email"
-          class="form-control" />
+        <input required type="email" name="email" id="email" class="form-control" />
         <div class="valid-feedback">Just One More Step To Go</div>
       </div>
 
       <!-- for password -->
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input
-          required
-          type="password"
-          name="password"
-          id="password"
-          class="form-control" />
+        <input required type="password" name="password" id="password" class="form-control" />
       </div>
       <button class="btn btn-success">Sign Up</button>
     </form>

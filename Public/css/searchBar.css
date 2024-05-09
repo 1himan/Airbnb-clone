@@ -66,7 +66,7 @@
 }
 
 .search-input {
-  border-radius: .6rem;
+  border-radius: 0.6rem;
   width: 13rem;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .advance-btn {
-  color: #d9e0e2;
+  color: #ffffff;
   background-color: #ff5a5f;
   border: 2px solid #fff;
 }

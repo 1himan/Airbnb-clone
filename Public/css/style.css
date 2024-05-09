@@ -161,5 +161,10 @@ img {
   text-align: center;
 }
 .show-img {
-  height: 22rem !important
+  height: 22rem !important;
+}
+
+.signUp {
+  text-align: center !important;
+  width: fit-content !important;
 }
