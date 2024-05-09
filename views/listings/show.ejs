@@ -1,0 +1,287 @@
+<% layout("/layouts/boilerplate") %>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Advance Search</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="advanceSearchForm" action="/listings/<%=listing._id%>/map" method="post" novalidate class="needs-validation" enctype="application/x-www-form-urlencoded">
+
+          <div class="row">
+            <!-- Location -->
+            <div class="mb-3 col-md-9">
+
+              <label for="location" class="form-label">Location</label>
+              <input type="text" name="listing[location]" placeholder="enter location" class="form-control" />
+
+            </div>
+            <div class="mt-4 col-md-2">
+              <!-- also add a popup "saying save you time" -->
+              <button class="btn btn-outline-info btn-autofill" onclick="getLocation()" type="button">Autofill</button>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" form="advanceSearchForm" class="btn btn-primary">Calculate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="row">
+
+  <div class="offset-4 col-12 mt-3 mx-auto listing_heading">
+    <h3><%= listing.title %></h3>
+  </div>
+  <div class="card col-12 col-lg-6 listing-card mx-auto ">
+    <!-- alright so I have given this div a decent amount of width even on large
+    screen sizes but a new problem arises that when In large screen sizes this div
+    is getting shifted towards the left side of the screen since it is occupying less space and
+    alot of empty space is left there on the right side but I want the empty space to be
+    equally distributed how can I do that? -->
+    <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image" />
+
+    <div class="card-body">
+      <p class="card-text">
+        Owned By <b><i><%= listing.owner.username %></i></b>
+      </p>
+      <p class="card-text listing_description"><%= listing.description %></p>
+      <p class="card-text">Price : <i> ₹ <b><%= listing.price.toLocaleString("en-IN") %></b> per night</i></p>
+      <p class="card-text">Location : <b><%= listing.location %></b></p>
+      <p class="card-text">Country : <b><%= listing.country %></b> </p>
+    </div>
+  </div>
+
+  <br />
+
+  <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
+  <div class="btns">
+    <a href="/listings/<%=listing._id%>/edit" class="btn btn-outline-info col-1  edit-btn">Edit</a>
+    <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
+      <button class="btn btn-dark offset-3">Delete</button>
+    </form>
+  </div>
+  <% } %>
+  <div class="col-12 mb-3">
+    <% if(currUser){ %>
+    <h4 class="mt-3">Drop a Review</h4>
+    <form action="/listings/<%=listing._id%>/reviews" method="post" novalidate class="needs-validation">
+      <div class="mb-3 mt-3">
+        <label for="rating" class="form-label">Rating</label>
+        <fieldset class="starability-slot">
+          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+          <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label">Comments</label>
+        <textarea required name="review[comment]" id="comment" cols="30" rows="5" class="form-control"></textarea>
+        <div class="invalid-feedback">
+          Please Do Not Submit An Empty Comment
+        </div>
+      </div>
+      <button class="btn btn-outline-dark">Submit</button>
+    </form>
+    <% } %>
+    <br>
+
+    <!-- reviews -->
+    <p class=""><b> All reviews </b></p>
+    <div class="row flex-wrap">
+      <% for(review of listing.reviews){ %>
+      <!-- <br>
+  <hr /> -->
+
+      <!-- Use col-12 for extra small (xs) screens, col-sm-6 for small (sm) screens, col-md-4 for medium (md) screens, and col-lg-3 for large (lg) screens -->
+      <div class="card col-11 col-sm-6 col-md-4 col-lg-3 col-sm-2 col-xs-1 ms-3 mb-3">
+        <div class="card-body">
+          <h5 class="card-title mt-1"><%= review.author.username %></h5>
+          <p class="starability-result card-text" data-rating="<%= review.rating %>">
+            Rated: <%= review.rating %> stars
+          </p>
+          <p class="card-text"><%= review.comment %></p>
+        </div>
+        <form method="post" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE" class="mb-3">
+          <button type="submit" class="btn btn-sm btn-dark">Delete</button>
+        </form>
+      </div>
+      <% }%>
+    </div>
+
+  </div>
+  <h4 class="display-route">Calculate your distance from this place <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Display Route
+    </button></h4>
+
+</div>
+<div class="row">
+  <div id="map" class="col-12 mb-3"></div>
+</div>
+<script>
+  const platform = new H.service.Platform({
+    apikey: "h6Oeq0Ftw3TTcHUOwoBQYymt2JXR85-6WwIDudh5sQg",
+  });
+  var defaultLayers = platform.createDefaultLayers();
+  var map = new H.Map(document.getElementById('map'),
+    defaultLayers.vector.normal.map, {
+      zoom: 5,
+    }
+  );
+  window.addEventListener('resize', () => map.getViewPort().resize());
+  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+  var ui = H.ui.UI.createDefault(map, defaultLayers);
+  const hereApi = {
+    apikey: "h6Oeq0Ftw3TTcHUOwoBQYymt2JXR85-6WwIDudh5sQg",
+    geocodeUrl: "https://geocode.search.hereapi.com/v1/geocode",
+  };
+  let lat2, lng2
+  async function geocodeLocation() {
+    const address = '<%=listing.location%>';
+    try {
+      const response = await fetch(`${hereApi.geocodeUrl}?apiKey=${hereApi.apikey}&q=${encodeURIComponent(address)}`);
+      const data = await response.json();
+      lat2 = data.items[0].position.lat
+      lng2 = data.items[0].position.lng
+      if (data.items && data.items.length > 0) {
+        const location = data.items[0].position;
+        map.setCenter({
+          lat: location.lat,
+          lng: location.lng
+        });
+        map.setZoom(14);
+        const marker = new H.map.Marker({
+          lat: location.lat,
+          lng: location.lng
+        });
+        map.addObject(marker);
+        const bubble = new H.ui.InfoBubble({
+          lat: location.lat,
+          lng: location.lng
+        }, {
+          content: "This Is Where You Will Be",
+        });
+        ui.addBubble(bubble);
+        marker.addEventListener(
+          "tap",
+          function() {
+            const bubble = new H.ui.InfoBubble({
+              lat: location.lat,
+              lng: location.lng
+            }, {
+              content: "<p><b><%=listing.location%></b></p>",
+            });
+            ui.addBubble(bubble);
+          },
+          false
+        );
+      } else {
+        console.log('No results found for that address.');
+      }
+    } catch (error) {
+      console.error('Error with the geocoding request:', error);
+    }
+  }
+  geocodeLocation();
+  let latitude, longitude;
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+
+  //code for making the route
+  let userMarker;
+
+  function showPosition(position) {
+    // Assign values to the global variables
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+
+    // Autofill the location input field
+    var locationInput = document.querySelector('input[name="listing[location]"]');
+    locationInput.value = "Latitude: " + latitude + ", Longitude: " + longitude;
+
+    // Submit the form
+    document.getElementById('advanceSearchForm').submit();
+  }
+
+  // Get an instance of the routing service version 8
+  var router = platform.getRoutingService(null, 8);
+
+  // Create the parameters for the routing request:
+
+
+  var routingParameters = {
+    'routingMode': 'fast',
+    'transportMode': 'car',
+    // The start point of the route:
+
+    'origin': `${lat1},${lng1}`,
+    // The end point of the route:
+    'destination': `${lat2},${lng2}`,
+    // Include the route shape in the response
+    'return': 'polyline'
+  };
+
+  // Define a callback function to process the routing response:
+  var onResult = function(result) {
+    // ensure that at least one route was found
+    if (result.routes.length) {
+      result.routes[0].sections.forEach((section) => {
+        // Create a linestring to use as a point source for the route line
+        let linestring = H.geo.LineString.fromFlexiblePolyline(section.polyline);
+
+        // Create a polyline to display the route:
+        let routeLine = new H.map.Polyline(linestring, {
+          style: {
+            strokeColor: 'navy',
+            lineWidth: 3
+          }
+        });
+
+        // Create a marker for the start point:
+        let startMarker = new H.map.Marker(section.departure.place.location);
+
+        // Create a marker for the end point:
+        let endMarker = new H.map.Marker(section.arrival.place.location);
+
+        // Add the route polyline and the two markers to the map:
+        map.addObjects([routeLine, startMarker, endMarker]);
+
+      });
+    }
+  };
+  router.calculateRoute(routingParameters, onResult, function(error) {
+    alert(error.message);
+  });
+</script>
+
+
+<script>
+  console.log("<%= listing.location%>");
+</script>

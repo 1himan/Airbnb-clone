@@ -1,0 +1,163 @@
+/* This applies to the scrollbar in the #filters div */
+#filters::-webkit-scrollbar {
+  width: 10px;
+  /* Adjust to desired width */
+}
+
+#filters::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* Track color */
+}
+
+#filters::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* Track color */
+  border-radius: 10px;
+  /* Adjust to desired curvature */
+}
+
+#filters::-webkit-scrollbar-thumb {
+  background: #484848;
+  /* Handle color */
+  border-radius: 10px;
+  /* Adjust to desired curvature */
+}
+
+#filters::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  /* Color of the handle on hover */
+}
+
+#filters {
+  display: flex;
+  /* flex-wrap: wrap; */
+  overflow-x: auto;
+  gap: 20px;
+}
+
+.filter {
+  text-align: center;
+  margin-right: 2rem;
+  margin-top: 1.5rem;
+  opacity: 0.7;
+}
+
+.filter i {
+  font-size: 19px;
+  width: 3.5rem;
+  color: #1f222b;
+}
+.filter a {
+  color: #1f222b;
+  text-decoration: none;
+}
+.filter a:hover {
+  text-decoration: underline;
+}
+
+.filter p {
+  margin-top: 0.4rem;
+  font-size: 13px;
+}
+
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.search-input {
+  border-radius: .6rem;
+  width: 13rem;
+}
+
+.search-btn {
+  border-radius: 10rem;
+  background-color: #ffffff;
+}
+
+.search-btn i {
+  color: #ff5a5f;
+  position: relative;
+  top: 0.1rem;
+}
+.search-btn:hover,
+.search-btn:hover i {
+  color: white;
+}
+
+.search-bar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+.navbar-toggler {
+  border-color: white;
+}
+
+/** for budget dropdown menu */
+/* Style the select element */
+.budget-select {
+  color: #1f222b; /* Text color */
+  background-color: #f4f3f3; /* Background color */
+  border-color: #484848; /* Border color */
+}
+
+/* Style the options */
+.budget-select option {
+  color: #8f9294; /* Text color */
+  background-color: #d9e0e2; /* Background color */
+}
+
+/* Style the selected option */
+.budget-select option:checked {
+  color: #1f222b; /* Text color */
+  background-color: #484848; /* Background color */
+}
+
+.advance-btn {
+  color: #d9e0e2;
+  background-color: #ff5a5f;
+  border: 2px solid #fff;
+}
+.advance-btn:hover {
+  background-color: #fff;
+  color: #ff5a5f;
+  border: 2px solid #ffffff;
+}
+@media (max-width: 1400px) {
+  .advance-btn {
+    height: 4rem;
+    width: 6rem;
+    display: block;
+    margin-top: 2rem;
+    border-radius: 0.7rem;
+  }
+  .gap {
+    width: 5rem;
+  }
+}
+@media (min-width: 1400px) {
+  .advance-btn {
+    height: 2.5rem;
+    width: 9.3rem;
+    border-radius: 4rem;
+    margin-top: 1.8rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* CSS for small screens */
+@media (max-width: 950px) {
+  .signup {
+    display: none;
+  }
+} /* CSS for small screens */
+@media (max-width: 767px) {
+  .signup {
+    display: block;
+  }
+}

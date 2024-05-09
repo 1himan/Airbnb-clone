@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-md bg-body-light sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/listings"><img src="/css/Images/airbnb1.png" alt=""></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+
+      <!-- for search bar -->
+      <div class=" search-bar">
+        <form class="d-flex" role="search" action="/listings/search" method="post">
+          <input class="form-control search-input" type="search" placeholder="Location or Country" name="searchTerm" aria-label="Search by Location" />
+          <button class="btn search-btn ms-2" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+      </div>
+
+
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link hide-on-small" href="/listings/new">Add new Listing</a>
+        <% if(!currUser){ %>
+        <a class="nav-link signup" href="/signup"><b>Sign Up</b></a>
+        <a class="nav-link login" href="/login"> <b>Log in</b></a>
+        <% } %>
+        <!-- comment to have some breathing space -->
+        <% if(currUser){ %>
+        <a class="nav-link logout" href="/logout"> <b>Log Out</b></a>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
+</nav>

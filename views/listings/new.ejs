@@ -1,0 +1,93 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+  <div class="row mt-3">
+    <div class="col-8 offset-2">
+      <br /><br />
+      <h3>Create a new listing</h3>
+      <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-md-6 mb-3 title">
+            <label for="title" class="form-label">Title</label>
+            <input required type="text" id="title" name="listing[title]" placeholder="enter title" class="form-control" />
+            <div class="valid-feedback">
+              Title’s so good, it deserves a crown!
+            </div>
+            <div class="invalid-feedback">
+              No title? Are we playing hide and seek?
+            </div>
+          </div>
+          <div class="col-md-6 category">
+            <label for="category" class="form-label">Choose Category</label>
+            <select class="form-select select-category" name="listing[category]" id="category">
+              <option selected>Choose...</option>
+              <option value="City">City</option>
+              <option value="Beach">Beach</option>
+              <option value="Mountain">Mountain</option>
+              <option value="Historical">Historical</option>
+              <option value="Luxury">Luxury</option>
+              <option value="Family-friendly">Family-friendly</option>
+              <option value="Rooms">Rooms</option>
+              <option value="Camping">Camping</option>
+              <option value="Skiing">Skiing</option>
+              <option value="Cold">Cold</option>
+            </select>
+          </div>
+          
+
+        </div>
+
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea required name="listing[description]" class="form-control"></textarea>
+          <div class="valid-feedback">
+            This description is more gripping than my favorite novel!
+          </div>
+          <div class="invalid-feedback">
+            A description missing in action! Send out the search party!
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Listing's Image</label>
+          <input type="file" name="listing[image]" class="form-control" required />
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price </label>
+            <input required type="number" name="listing[price]" placeholder="enter price" class="form-control" />
+            <div class="valid-feedback">
+              With a price like that, take my money already!
+            </div>
+            <div class="invalid-feedback">
+              No price? Is this a guessing game?
+            </div>
+          </div>
+          <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label>
+            <input required type="text" name="listing[country]" placeholder="enter country" class="form-control" />
+            <div class="valid-feedback">
+              Ah, a country I’d love to teleport to!
+            </div>
+            <div class="invalid-feedback">
+              No country? Are we floating in space?
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input required type="text" name="listing[location]" placeholder="enter location" class="form-control" />
+          <div class="valid-feedback">
+            This location is on my travel bucket list!
+          </div>
+          <div class="invalid-feedback">
+            Location not found. Are we heading to Narnia?
+          </div>
+        </div>
+
+        <button class="btn btn-dark add-btn mt-3">Add</button>
+        <br /><br />
+      </form>
+    </div>
+  </div>
+</body>

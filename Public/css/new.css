@@ -1,0 +1,19 @@
+/* Style the select element */
+.select-category {
+  color: #1f222b; /* Text color */
+  background-color: #f4f3f3; /* Background color */
+  border-color: #a4bcc4; /* Border color */
+}
+
+/* Style the options */
+.select-category option {
+  color: #8f9294; /* Text color */
+  background-color: #d9e0e2; /* Background color */
+}
+
+/* Style the selected option */
+.select-category option:checked {
+  color: #1f222b; /* Text color */
+  background-color: #a4bcc4; /* Background color */
+}
+

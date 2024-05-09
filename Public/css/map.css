@@ -1,0 +1,26 @@
+/* Define the map container's size */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.map_container {
+  width: 100vw;
+}
+
+#map {
+  width: 100vw;
+  height: 50vh;
+}
+#map canvas {
+  width: 100vw;
+  border-radius: 1rem;
+}
+
+.btn-autofill {
+  margin-top: 0.45rem;
+}
+.display-route {
+  padding-bottom: 1rem;
+}

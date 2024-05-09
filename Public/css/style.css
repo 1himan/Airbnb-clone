@@ -1,0 +1,165 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f3f3;
+}
+.container {
+  flex: 1;
+}
+* {
+  font-family: myFont;
+}
+@font-face {
+  font-family: myFont;
+  src: url(./Mograph/Mograph.ttf);
+  /* src: url(LiteOnFree.otf); */
+}
+.navbar {
+  height: 4.2rem;
+  background-color: #ff5a5f;
+}
+
+.navbar-nav a {
+  color: white !important;
+  margin-left: 1rem;
+}
+
+.navbar-collapse.show {
+  background-color: #ff5a5f;
+  width: 100vw !important;
+}
+
+.fa-display {
+  color: #d9e0e2;
+  font-size: 1.4rem;
+  font-family: fontseca;
+  margin-left: 1rem;
+  position: relative;
+  top: 0.1rem;
+}
+
+.explore-link {
+  position: relative;
+  right: 1.2rem;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.f-info-brand {
+  font-size: 12px;
+  padding-right: 1.5rem;
+  color: #dbdbdb;
+}
+
+.f-info-links a {
+  font-size: 12px;
+  text-decoration: none;
+  color: #f4f3f3;
+  padding-right: 1.5rem;
+}
+
+.f-info-links a:hover {
+  text-decoration: underline;
+}
+
+.f-info-socials i {
+  font-size: 1.5rem;
+  margin-right: 2rem;
+  margin-top: 0.5rem;
+  color: #f4f3f3;
+}
+
+.f-info {
+  display: flex;
+  height: 6.2rem;
+  background-color: #ff5a5f;
+  flex-wrap: wrap;
+}
+
+/** Styling for Cards */
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
+}
+
+.card-img-top {
+  border-radius: 1rem !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+.card-text p {
+  font-weight: 400;
+}
+
+.listing-link {
+  text-decoration: none;
+}
+
+/** Card effect on hover */
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white;
+}
+
+/** Add page */
+.add-btn {
+  border: none !important;
+  color: #ff5a5f !important;
+  background-color: #a4bcc4 !important;
+}
+/** Edit page */
+.edit-btn {
+  border: none !important;
+  color: #ff5a5f !important;
+  background-color: #a4bcc4 !important;
+  min-width: 4rem;
+}
+img {
+  width: 14rem;
+  height: 10rem;
+}
+
+/** Show page */
+.show-img {
+  height: 30vh !important;
+}
+
+.btns {
+  display: flex;
+}
+
+.show-card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar-brand img {
+  width: 30px; /* Adjust this value to decrease or increase the size */
+  height: auto; /* This will keep the aspect ratio of the image intact */
+}
+
+.listing_description {
+  color: grey;
+}
+.listing_heading {
+  text-align: center;
+}
+.show-img {
+  height: 22rem !important
+}

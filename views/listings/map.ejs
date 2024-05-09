@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-clustering.js"></script>
+
+</head>
+
+<body>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    nav {
+      width: 100vw;
+    }
+
+    footer {
+      width: 100vw;
+    }
+  </style>
+  <div id="map"></div>
+
+  <script>
+    const platform = new H.service.Platform({
+      apikey: "h6Oeq0Ftw3TTcHUOwoBQYymt2JXR85-6WwIDudh5sQg",
+    });
+    var defaultLayers = platform.createDefaultLayers();
+    var map = new H.Map(document.getElementById('map'),
+      defaultLayers.vector.normal.map
+    );
+    window.addEventListener('resize', () => map.getViewPort().resize());
+    var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+    var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+    const hereApi = {
+      apikey: "h6Oeq0Ftw3TTcHUOwoBQYymt2JXR85-6WwIDudh5sQg",
+      geocodeUrl: "https://geocode.search.hereapi.com/v1/geocode",
+    };
+    let lat2, lng2;
+    async function geocodeLocation() {
+      const address = '<%=listing.location%>';
+      try {
+        console.log();
+        const response = await fetch(`${hereApi.geocodeUrl}?apiKey=${hereApi.apikey}&q=${encodeURIComponent(address)}`);
+        const data = await response.json();
+        lat2 = data.items[0].position.lat;
+        lng2 = data.items[0].position.lng;
+        console.log(lat2);
+        if (data.items && data.items.length > 0) {
+          const location = data.items[0].position;
+          map.setCenter({
+            lat: location.lat,
+            lng: location.lng
+          });
+          map.setZoom(14);
+          const marker = new H.map.Marker({
+            lat: location.lat,
+            lng: location.lng
+          });
+          // map.addObject(marker);
+          return {
+            lat2,
+            lng2,
+            marker
+          };
+        } else {
+          console.log('No results found for that address.');
+        }
+      } catch (error) {
+        console.error('Error with the geocoding request:', error);
+      }
+      return {
+        lat2,
+        lng2
+      };
+    }
+
+    let latitude, longitude;
+    geocodeLocation().then(({
+      lat2,
+      lng2,
+      marker
+    }) => {
+      let lat1 = `<%=userLocation.latitude%>`;
+      console.log(lat1);
+      let lng1 = `<%=userLocation.longitude%>`;
+      console.log(lng1);
+      console.log(lat2);
+      console.log(lng2);
+      var routingParameters = {
+        'routingMode': 'fast',
+        'transportMode': 'car',
+        'origin': `${lat1},${lng1}`,
+        'destination': `${lat2},${lng2}`,
+        'return': 'polyline'
+      };
+      calculateDistance(platform, `${lat1},${lng1}`, `${lat2},${lng2}`)
+        .then(distance => {
+
+          let distanceStr = `<b>${distance/1000}</b> km Away`
+          let bubble = new H.ui.InfoBubble({
+            lat: lat2,
+            lng: lng2
+          }, {
+            content: distanceStr
+          });
+          let ui = H.ui.UI.createDefault(map, defaultLayers);
+          ui.addBubble(bubble);
+          marker.addEventListener('tap', function() {
+            bubble.open();
+          });
+        })
+        .catch(error => console.log(error));
+      var router = platform.getRoutingService(null, 8);
+      var onResult = function(result) {
+        if (result.routes.length) {
+          result.routes[0].sections.forEach((section) => {
+            let linestring = H.geo.LineString.fromFlexiblePolyline(section.polyline);
+            let routeLine = new H.map.Polyline(linestring, {
+              style: {
+                strokeColor: 'navy',
+                lineWidth: 3
+              }
+            });
+            let startMarker = new H.map.Marker(section.departure.place.location);
+            let endMarker = marker
+            map.addObjects([routeLine, startMarker, endMarker]);
+          });
+        }
+      };
+      router.calculateRoute(routingParameters, onResult, function(error) {
+        alert(error.message);
+      });
+    });
+
+
+    function calculateDistance(platform, origin, destination) {
+      var router = platform.getRoutingService(null, 8);
+      var routingParameters = {
+        'routingMode': 'fast',
+        'transportMode': 'car',
+        'origin': origin,
+        'destination': destination,
+        'return': 'summary'
+      };
+      return new Promise((resolve, reject) => {
+        var onResult = function(result) {
+          if (result.routes.length) {
+            resolve(result.routes[0].sections[0].summary.length);
+          } else {
+            reject('No routes found');
+          }
+        };
+        router.calculateRoute(routingParameters, onResult, function(error) {
+          reject(error.message);
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

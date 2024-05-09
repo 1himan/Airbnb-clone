@@ -1,0 +1,186 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Advance Search</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="advanceSearchForm" action="/listings/filter/advance" method="post" novalidate class="needs-validation" enctype="application/x-www-form-urlencoded">
+          <div class="row">
+            <!-- Title -->
+            <div class="col-md-6 mb-3 title">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" id="title" name="listing[title]" placeholder="enter title" class="form-control" />
+            </div>
+            <!-- Category -->
+            <div class="col-md-6 category">
+              <label for="category" class="form-label">Choose Category</label>
+              <select class="form-select select-category" name="listing[category]" id="category">
+                <option selected>Choose...</option>
+                <option value="City">City</option>
+                <option value="Beach">Beach</option>
+                <option value="Mountain">Mountain</option>
+                <option value="Historical">Historical</option>
+                <option value="Luxury">Luxury</option>
+                <option value="Family-friendly">Family-friendly</option>
+                <option value="Rooms">Rooms</option>
+                <option value="Camping">Camping</option>
+                <option value="Skiing">Skiing</option>
+                <option value="Cold">Cold</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Budget -->
+            <div class="mb-3 col-md-6">
+              <label for="budget" class="form-label">Range</label>
+              <select class="form-select budget-select" name="listing[budgetType]" id="budget">
+                <option selected>Choose...</option>
+                <option value="under">Under</option>
+                <option value="over">Over</option>
+              </select>
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="price" class="form-label"> Price </label>
+              <input type="number" name="listing[price]" placeholder="enter price" class="form-control" />
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- Country -->
+            <div class="mb-3 col-md-6">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" name="listing[country]" placeholder="enter country" class="form-control" />
+            </div>
+            <!-- Location -->
+            <div class="mb-3 col-md-6">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" name="listing[location]" placeholder="enter location" class="form-control" />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" form="advanceSearchForm" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display: flex;">
+  <div id="filters">
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/City"> <i class="fa-solid fa-city"></i>
+          <p>City</p>
+        </a>
+
+      </div>
+    </div>
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/Beach"> <i class="fa-solid fa-umbrella-beach"></i>
+          <p>Beach</p>
+        </a>
+      </div>
+
+    </div>
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/Mountain"> <i class="fa-solid fa-mountain-sun"></i>
+          <p>Mountain</p>
+        </a>
+      </div>
+
+    </div>
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/Historical"> <i class="fa-solid fa-landmark-dome"></i>
+          <p>Historical</p>
+        </a>
+      </div>
+
+    </div>
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/Luxury"> <i class="fa-solid fa-sack-dollar"></i>
+          <p>Luxury</p>
+        </a>
+      </div>
+
+    </div>
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/Family-friendly"> <i class="fa-solid fa-people-roof"></i>
+          <p>Family-friendly</p>
+        </a>
+      </div>
+
+    </div>
+    <div class="filter">
+      <div>
+        <a href="/listings/filter/Rooms"> <i class="fa-solid fa-bed"></i>
+          <p>Rooms</p>
+        </a>
+      </div>
+
+    </div>
+    <div class="filter">
+      <div>
+
+        <a href="/listings/filter/Camping"> <i class="fa-solid fa-tent"></i>
+          <p>Camping</p>
+        </a>
+      </div>
+    </div>
+    <div class="filter">
+      <div>
+
+        <a href="/listings/filter/Skiing"> <i class="fa-solid fa-person-skiing-nordic"></i>
+          <p>Skiing</p>
+        </a>
+      </div>
+    </div>
+    <div class="filter">
+      <div>
+
+        <a href="/listings/filter/Cold"> <i class="fa-regular fa-snowflake"></i>
+          <p>Cold</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <div class="gap"></div>
+  <button type="button" class="btn btn-primary advance-btn mx-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Advance Search
+  </button>
+</div>
+
+
+
+<!--* creating a card for each time the for loop is looped over the data-->
+<div class="row row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-md-3 row-cols-sm-2 row-cols-1 mt-4">
+  <% for (let listing of allListings) {%>
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="card col listing-card">
+      <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 17rem;" />
+      <div class="card-img-overlay">View This Place</div>
+      <div class="card-body">
+        <p class="card-text">
+          <b><%=listing.title%></b> <br />
+        <p>₹ <%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %>/night</p>
+        </p>
+      </div>
+    </div>
+  </a>
+  <% } %>
+
+
+
+</div>
